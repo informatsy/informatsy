@@ -81,12 +81,6 @@ function App() {
   useEffect(() => {
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
-    // if ("serviceWorker" in navigator) {
-    //   console.log("registered");
-    //   window.addEventListener("load", () => {
-    //     navigator.serviceWorker.register("./sw.js");
-    //   });
-    // }
 
     ReactGA.initialize(TRACKING_ID);
     ReactGA.pageview(window.location.pathname + window.location.search);
