@@ -48,5 +48,6 @@
   "scope":"/",
   "display": "standalone",
   "theme_color": "#448AFF",
-  "background_color": "#fdffb6"
+  "background_color": "white",
+  "orientation":"portrait-primary"
 }

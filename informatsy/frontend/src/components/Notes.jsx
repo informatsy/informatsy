@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core";
 
 import axios from "axios";
 import { authAxios } from "../Authaxios";
+import { Helmet } from "react-helmet";
 const useStyles = makeStyles((theme) => ({
   loader: {
     height: "50vh",
@@ -103,6 +104,29 @@ export default function Notes() {
 
   return !loading ? (
     <div>
+      <Helmet>
+        <meta name="title" content="Notes" />
+        <meta
+          name="description"
+          content="Notes repspective branch and degree"
+        />
+        <meta
+          name="keywords"
+          content="informatsy,vtu notes,vtu students,info,informat,informatsy-info,information,Informatsy"
+        ></meta>
+        <meta property="og:title" content="Informatsy" />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://informatsy.in/resources/notes"
+        />
+        <title>Notes</title>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9672945121394472"
+          crossorigin="anonymous"
+        ></script>
+      </Helmet>
       <Box mr={4} py={3}>
         <SearchAndFilter
           onSearch={onSearch}
@@ -136,6 +160,29 @@ export default function Notes() {
     </div>
   ) : (
     <div className={classes.loader}>
+      <Helmet>
+        <meta name="title" content="Notes" />
+        <meta
+          name="description"
+          content="Notes repspective branch and degree"
+        />
+        <meta
+          name="keywords"
+          content="informatsy,vtu notes,vtu students,info,informat,informatsy-info,information,Informatsy"
+        ></meta>
+        <meta property="og:title" content="Informatsy" />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://informatsy.in/resources/notes"
+        />
+        <title>Loading Notes</title>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9672945121394472"
+          crossorigin="anonymous"
+        ></script>
+      </Helmet>
       <span className={classes.loaderProgress}>
         <CircularProgress size="2rem" />
       </span>

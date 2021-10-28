@@ -29,12 +29,14 @@
         "react-ga": "^3.3.0",
         "react-google-login": "^5.2.2",
         "react-google-one-tap-login": "0.0.8",
+        "react-helmet": "^6.1.0",
         "react-linkedin-login": "^1.0.4",
         "react-linkedin-login-oauth2": "^1.0.9",
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
         "react-scripts": "4.0.3",
-        "web-vitals": "^1.1.2"
+        "web-vitals": "^1.1.2",
+        "wow": "0.0.6"
     },
     "watch": {
         "build": {

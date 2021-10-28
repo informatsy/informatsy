@@ -14,6 +14,7 @@ django-autoslug = "*"
 djangorestframework-simplejwt = "*"
 django-googledrive-storage = "*"
 pyjwt = "~=2.1.0"
+python-decouple = "*"
 
 [dev-packages]
 
