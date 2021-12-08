@@ -88,6 +88,7 @@ function registerValidSW(swUrl, config) {
                   autoClose: false, // Prevents toast from auto closing
                 }
               );
+              window.close();
 
               // Execute callback
               if (config && config.onUpdate) {

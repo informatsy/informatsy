@@ -25,8 +25,10 @@ import axios from "axios";
 import Notes from "./components/Notes";
 import QuestionPapers from "./components/QuestionPapers";
 import About from "./components/layoutsComponent/About";
+import IccHome from "./components/ICC/IccHome";
+import AboutUs from "./components/ICC/AboutUs";
 import Notifications from "./components/Notifications";
-import Contact from "./components/layoutsComponent/Contact";
+import Explore from "./components/exploreComponent/ExploreHome";
 import Features from "./components/layoutsComponent/Features";
 import ActivationPage from "./components/ActivateAccount";
 import MyProfile from "./components/profileComponents/MyProfile";
@@ -118,16 +120,14 @@ function App() {
                 <Route exact path="/resources" component={ResourcePage} />
                 <Route exact path="/resources/syllabus" component={Syllabus} />
                 <Route exact path="/resources/notes" component={Notes} />
-
                 <Route
                   exact
                   path="/resources/questionPapers"
                   component={QuestionPapers}
                 />
-                <Route exact path="/features" component={Features} />
-                <Route exact path="/contact" component={Contact} />
-                <Route exact path="/about" component={About} />
-
+                <Route exact path="/ICC" component={IccHome} />
+                <Route exact path="/explore" component={Explore} />
+                <Route exact path="/about" component={AboutUs} />
                 {/* <Redirect to="/"> </Redirect> */}
               </Switch>
             </Navbar>
