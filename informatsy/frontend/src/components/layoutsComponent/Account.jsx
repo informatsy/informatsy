@@ -41,7 +41,12 @@ function Account() {
       .then((res) => {
         Cookies.remove("access_token");
         Cookies.remove("refresh_token");
-        user.setUser({ status: false, profile_img: "", name: "" });
+        user.setUser({
+          status: false,
+          profile_img: "",
+          name: "",
+          isLoaded: true,
+        });
         history.push("/");
       })
       .catch((err) => console.log(err));
@@ -79,7 +84,7 @@ function Account() {
         </Badge>
       </IconButton>
       <Avatar
-        alt={user.user.name}
+        alt={user.user.name[0].toUpperCase()}
         src={user.user.profile_img}
         onClick={handleClick}
         className={classes.avtar}

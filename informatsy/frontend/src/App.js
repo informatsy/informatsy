@@ -34,6 +34,8 @@ import RouteChangeTracker from "./RouteChangeTracker";
 import Cookies from "js-cookie";
 import ForgotPass from "./components/Forgot";
 import ResetPassword from "./components/ResetPassword";
+import * as firebase from "firebase/app";
+import "firebase/messaging";
 // Custom theme of Informatsy
 const theme = createMuiTheme({
   palette: {
@@ -75,17 +77,15 @@ function App() {
     appId: "1:1044436937196:web:cc8e71b50aae842df2f8c9",
     measurementId: "G-G6CXLGP1CN",
   };
-  const TRACKING_ID = "G-3CEZ1R6HBT";
-  // Initialize Firebase
 
+  // Initialize Firebase
+  const TRACKING_ID = "G-3CEZ1R6HBT";
   useEffect(() => {
+    ReactGA.initialize(TRACKING_ID);
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
-
-    ReactGA.initialize(TRACKING_ID);
-    ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
-
+  ReactGA.pageview(window.location.pathname + window.location.search);
   //init for google analytics
   // YOUR_OWN_TRACKING_ID
   const user = React.useContext(UserContext);
@@ -97,7 +97,7 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <Router>
-          <RouteChangeTracker />
+          {ReactGA.pageview(window.location.pathname + window.location.search)}
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
