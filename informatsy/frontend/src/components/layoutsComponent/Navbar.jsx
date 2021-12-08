@@ -15,7 +15,7 @@ import { useHistory, useLocation } from "react-router";
 import Cookies from "js-cookie";
 import { UserContext } from "../../UserContexapi";
 import { CircularProgress } from "@material-ui/core";
-
+import ExploreIcon from '@material-ui/icons/Explore';
 import {
   Avatar,
   Container,
@@ -177,8 +177,8 @@ export default function Navbar({ children }) {
   const menuItems = [
     { title: "Home", logo: "HomeIcon", path: "/" },
     { title: "Resources", logo: "MenuBookIcon", path: "/resources" },
-    { title: "Features", logo: "ImportantDevicesIcon", path: "/features" },
-    { title: "Contact", logo: "CallIcon", path: "/contact" },
+    { title: "ICC", logo: "ImportantDevicesIcon", path: "/ICC" },
+    { title: "Explore", logo: "ExploreIcon", path: "/explore" },
     { title: "About", logo: "InfoIcon", path: "/about" },
   ];
 
