@@ -38,6 +38,7 @@ import ForgotPass from "./components/Forgot";
 import ResetPassword from "./components/ResetPassword";
 import * as firebase from "firebase/app";
 import "firebase/messaging";
+import Attendance from "./components/exploreComponent/Attendance";
 // Custom theme of Informatsy
 const theme = createMuiTheme({
   palette: {
@@ -101,39 +102,44 @@ function App() {
         <Router>
           {ReactGA.pageview(window.location.pathname + window.location.search)}
           <Switch>
-            <Route exact path="/login" component={Login} /> 
-            <Route exact path="/signup" component={Signup} /> 
-            <Route exact path="/activateAccount" component={ActivationPage} /> 
-            <Route exact path="/linkedin" component={LinkedInPopUp} /> 
-            <Route exact path="/popup" component={PopupAccount} /> 
-            <Route exact path="/profile" component={MyProfile} /> 
-            <Route exact path="/notifications" component={Notifications} /> 
-            <Route exact path="/accounts/forgot" component={ForgotPass} /> 
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
+            <Route exact path="/activateAccount" component={ActivationPage} />
+            <Route exact path="/linkedin" component={LinkedInPopUp} />
+            <Route exact path="/popup" component={PopupAccount} />
+            <Route exact path="/profile" component={MyProfile} />
+            <Route exact path="/notifications" component={Notifications} />
+            <Route exact path="/accounts/forgot" component={ForgotPass} />
             <Route
               exact
               path="/accounts/resetpassword"
               component={ResetPassword}
-            /> 
+            />
             <Navbar>
               <Switch>
-                <Route exact path="/" component={HomePage} /> 
-                <Route exact path="/resources" component={ResourcePage} /> 
-                <Route exact path="/resources/syllabus" component={Syllabus} /> 
-                <Route exact path="/resources/notes" component={Notes} /> 
+                <Route exact path="/" component={HomePage} />
+                <Route exact path="/resources" component={ResourcePage} />
+                <Route exact path="/resources/syllabus" component={Syllabus} />
+                <Route exact path="/resources/notes" component={Notes} />
                 <Route
                   exact
                   path="/resources/questionPapers"
                   component={QuestionPapers}
-                /> 
-                <Route exact path="/ICC" component={IccHome} /> 
-                <Route exact path="/explore" component={Explore} /> 
-                <Route exact path="/about" component={AboutUs} /> 
-                {/* <Redirect to="/"> </Redirect> */} 
-              </Switch> 
-            </Navbar> 
-          </Switch> 
-        </Router> 
-      </ThemeProvider> 
+                />
+                <Route exact path="/ICC" component={IccHome} />
+                <Route exact path="/explore" component={Explore} />
+                <Route
+                  exact
+                  path="/explore/attendance"
+                  component={Attendance}
+                />
+                <Route exact path="/about" component={AboutUs} />
+                {/* <Redirect to="/"> </Redirect> */}
+              </Switch>
+            </Navbar>
+          </Switch>
+        </Router>
+      </ThemeProvider>
     </div>
   );
 }

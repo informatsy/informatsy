@@ -60,6 +60,7 @@ function Account() {
   };
 
   let [data, setData] = useState([]);
+  let [notificationCheck, setNotificationCheck] = useState(false);
 
   useEffect(() => {
     axios
@@ -76,10 +77,10 @@ function Account() {
       <IconButton
         aria-label="show new notifications"
         color="primary"
-        onClick={() => history.push("/notifications")}
+        onClick={() => {history.push("/notifications"); setNotificationCheck(true);}}
         style={{ marginRight: "10px" }}
       >
-        <Badge badgeContent={data.length} color="error">
+        <Badge badgeContent={notificationCheck ? 0 : data.length} color="error">
           <NotificationsIcon />
         </Badge>
       </IconButton>
