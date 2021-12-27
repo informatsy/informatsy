@@ -36,7 +36,10 @@ import RouteChangeTracker from "./RouteChangeTracker";
 import Cookies from "js-cookie";
 import ForgotPass from "./components/Forgot";
 import ResetPassword from "./components/ResetPassword";
+import * as firebase from "firebase/app";
+import "firebase/messaging";
 import Attendance from "./components/exploreComponent/Attendance";
+import { authAxios } from "./Authaxios";
 // Custom theme of Informatsy
 const theme = createMuiTheme({
   palette: {
@@ -78,23 +81,28 @@ function App() {
     appId: "1:1044436937196:web:cc8e71b50aae842df2f8c9",
     measurementId: "G-G6CXLGP1CN",
   };
-  const TRACKING_ID = "G-3CEZ1R6HBT";
-  // Initialize Firebase
 
+  // -----------------------Calling the Resource section data here only--------------------
+  const resourceCollector = async () => {
+    // try {
+    //   const notes = await authAxios.get("notes/");
+    //   const questionPaper = await authAxios.get("questionPapers/");
+    //   console.log(notes.data);
+    //   console.log(questionPaper.data);
+    // } catch {
+    //   console.log("Something went wrong");
+    // }
+    // console.log("hello");
+  };
+  // --------------------------------Initialize Firebase--------------------------
+  const TRACKING_ID = "G-3CEZ1R6HBT";
   useEffect(() => {
+    ReactGA.initialize(TRACKING_ID);
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
-    // if ("serviceWorker" in navigator) {
-    //   console.log("registered");
-    //   window.addEventListener("load", () => {
-    //     navigator.serviceWorker.register("./sw.js");
-    //   });
-    // }
-
-    ReactGA.initialize(TRACKING_ID);
-    ReactGA.pageview(window.location.pathname + window.location.search);
+    resourceCollector();
   }, []);
-
+  ReactGA.pageview(window.location.pathname + window.location.search);
   //init for google analytics
   // YOUR_OWN_TRACKING_ID
   const user = React.useContext(UserContext);
@@ -106,42 +114,46 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <Router>
-          <RouteChangeTracker />
+          {ReactGA.pageview(window.location.pathname + window.location.search)}
           <Switch>
-            <Route exact path="/login" component={Login} /> 
-            <Route exact path="/signup" component={Signup} /> 
-            <Route exact path="/activateAccount" component={ActivationPage} /> 
-            <Route exact path="/linkedin" component={LinkedInPopUp} /> 
-            <Route exact path="/popup" component={PopupAccount} /> 
-            <Route exact path="/profile" component={MyProfile} /> 
-            <Route exact path="/notifications" component={Notifications} /> 
-            <Route exact path="/accounts/forgot" component={ForgotPass} /> 
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
+            <Route exact path="/activateAccount" component={ActivationPage} />
+            <Route exact path="/linkedin" component={LinkedInPopUp} />
+            <Route exact path="/popup" component={PopupAccount} />
+            <Route exact path="/profile" component={MyProfile} />
+            <Route exact path="/notifications" component={Notifications} />
+            <Route exact path="/accounts/forgot" component={ForgotPass} />
             <Route
               exact
               path="/accounts/resetpassword"
               component={ResetPassword}
-            /> 
+            />
             <Navbar>
               <Switch>
-                <Route exact path="/" component={HomePage} /> 
-                <Route exact path="/resources" component={ResourcePage} /> 
-                <Route exact path="/resources/syllabus" component={Syllabus} /> 
-                <Route exact path="/resources/notes" component={Notes} /> 
+                <Route exact path="/" component={HomePage} />
+                <Route exact path="/resources" component={ResourcePage} />
+                <Route exact path="/resources/syllabus" component={Syllabus} />
+                <Route exact path="/resources/notes" component={Notes} />
                 <Route
                   exact
                   path="/resources/questionPapers"
                   component={QuestionPapers}
-                /> 
-                <Route exact path="/ICC" component={IccHome} /> 
-                <Route exact path="/explore" component={Explore} /> 
-                <Route exact path="/explore/attendance" component={Attendance} /> 
-                <Route exact path="/about" component={AboutUs} /> 
-                {/* <Redirect to="/"> </Redirect> */} 
-              </Switch> 
-            </Navbar> 
-          </Switch> 
-        </Router> 
-      </ThemeProvider> 
+                />
+                <Route exact path="/ICC" component={IccHome} />
+                <Route exact path="/explore" component={Explore} />
+                <Route
+                  exact
+                  path="/explore/attendance"
+                  component={Attendance}
+                />
+                <Route exact path="/about" component={AboutUs} />
+                {/* <Redirect to="/"> </Redirect> */}
+              </Switch>
+            </Navbar>
+          </Switch>
+        </Router>
+      </ThemeProvider>
     </div>
   );
 }

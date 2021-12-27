@@ -5,9 +5,10 @@ import ResourceCard from "./resourcesComponents/ResourceCard";
 import NoResource from "./resourcesComponents/NoResource";
 import { CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
-
+import { UserContext } from "../UserContexapi";
 import axios from "axios";
 import { authAxios } from "../Authaxios";
+import { Helmet } from "react-helmet";
 const useStyles = makeStyles((theme) => ({
   loader: {
     height: "50vh",
@@ -21,23 +22,33 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function QuestionPapers() {
   const classes = useStyles();
-  const [allData, setAllData] = useState([]);
-  const [data, setData] = useState([]);
+  const qnsdata = React.useContext(UserContext);
+  const [allData, setAllData] = useState(qnsdata.qnspaper);
+ 
   const [defaultSortOrder, setDefaultSortOrder] = useState("");
   const [loading, setLoading] = useState(false);
   const [defaultSelectedCourse, setDefaultSelectedCourse] = useState("");
   const [defaultSelectedYearOrSem, setDefaultSelectedYearOrSem] = useState("");
-
   const onSearch = (searchData) => {
-    setData(
-      allData.filter(
+   
+    let arr = [];
+    if (defaultSelectedCourse === "" && defaultSelectedYearOrSem === "") {
+      arr = qnsdata.qnspaper.filter(
+        (d) =>
+          d.subjectName.toLowerCase().includes(searchData.toLowerCase()) ||
+          d.subjectCode.toLowerCase().includes(searchData.toLowerCase())
+      );
+    } else {
+      arr = qnsdata.qnspaper.filter(
         (d) =>
           (d.subjectName.toLowerCase().includes(searchData.toLowerCase()) ||
             d.subjectCode.toLowerCase().includes(searchData.toLowerCase())) &&
           d.course === defaultSelectedCourse &&
           d.yearOrSem === defaultSelectedYearOrSem
-      )
-    );
+      );
+    }
+    setAllData(arr);
+    // setDefaultSelectedYearOrSem(defaultSelectedYearOrSem)
   };
 
   const onFilter = (selectedCourse, selectedYearOrSem, sortOrder) => {
@@ -47,7 +58,7 @@ export default function QuestionPapers() {
   };
 
   const onSort = () => {
-    data.sort(function (a, b) {
+    allData.sort(function (a, b) {
       let x = a.subjectName.toLowerCase();
       let y = b.subjectName.toLowerCase();
       if (x < y) return -1;
@@ -57,7 +68,7 @@ export default function QuestionPapers() {
   };
 
   const onReverseSort = () => {
-    data.sort(function (a, b) {
+    allData.sort(function (a, b) {
       let x = a.subjectName.toLowerCase();
       let y = b.subjectName.toLowerCase();
       if (x < y) return 1;
@@ -68,31 +79,72 @@ export default function QuestionPapers() {
 
   useEffect(() => {
     setLoading(true);
-    authAxios
-      .get(`questionPapers/`)
-      .then((res) => {
-        const data = res.data;
-        setAllData(data);
-        setLoading(false);
-        if (defaultSelectedCourse === "" || defaultSelectedYearOrSem === "") {
-          setData(data);
-        } else {
-          setData(
-            data.filter(
-              (dt) =>
-                dt.course === defaultSelectedCourse &&
-                dt.yearOrSem === defaultSelectedYearOrSem
-            )
-          );
-        }
-      })
-      .catch((err) => console.log(err));
+    if (qnsdata.qnspaper.length === 0) {
+      authAxios
+        .get(`questionPapers/`)
+        .then((res) => {
+          const dat = res.data;
+          qnsdata.setQnspaper(dat);
+          setAllData(dat);
+
+          setLoading(false);
+          if (defaultSelectedCourse === "" || defaultSelectedYearOrSem === "") {
+            setAllData(dat);
+          } else {
+            setAllData(
+              qnsdata.qnspaper.filter(
+                (dt) =>
+                  dt.course === defaultSelectedCourse &&
+                  dt.yearOrSem === defaultSelectedYearOrSem
+              )
+            );
+          }
+        })
+        .catch((err) => console.log(err));
+    } else {
+      // setAllData(qnsdata.qnspaper);
+      if (defaultSelectedCourse === "" || defaultSelectedYearOrSem === "") {
+        setAllData(qnsdata.qnspaper);
+      } else {
+        setAllData(
+          qnsdata.qnspaper.filter(
+            (dt) =>
+              dt.course === defaultSelectedCourse &&
+              dt.yearOrSem === defaultSelectedYearOrSem
+          )
+        );
+      }
+      setLoading(false);
+    }
   }, [defaultSelectedCourse, defaultSelectedYearOrSem]);
 
   useEffect(() => {}, [defaultSortOrder]);
 
   return !loading ? (
     <div>
+      <Helmet>
+        <meta name="title" content="questionPapers" />
+        <meta
+          name="description"
+          content="Question papers of vtu and other related Degree or stream"
+        />
+        <meta
+          name="keywords"
+          content="informatsy,vtu notes,vtu students,info,informat,informatsy-info,information,Informatsy"
+        ></meta>
+        <meta property="og:title" content="Informatsy" />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://informatsy.in/resources/questionPapers"
+        />
+        <title>QuestionPapers</title>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9672945121394472"
+          crossorigin="anonymous"
+        ></script>
+      </Helmet>
       <Box mr={4} py={3}>
         <SearchAndFilter
           onSearch={onSearch}
@@ -106,10 +158,10 @@ export default function QuestionPapers() {
       </Box>
       <Box mr={3} ml={1} py={2}>
         <Grid container spacing={2} alignItems="center">
-          {data.length === 0 ? (
+          {allData.length === 0 ? (
             <NoResource />
           ) : (
-            data.map((qp) => (
+            allData.map((qp) => (
               <Grid item xs={12} sm={6} md={4} key={qp.id}>
                 <ResourceCard
                   subjectName={qp.subjectName}
@@ -126,6 +178,29 @@ export default function QuestionPapers() {
     </div>
   ) : (
     <div className={classes.loader}>
+      <Helmet>
+        <meta name="title" content="questionPapers" />
+        <meta
+          name="description"
+          content="Question papers of vtu and other related Degree or stream"
+        />
+        <meta
+          name="keywords"
+          content="informatsy,vtu notes,vtu students,info,informat,informatsy-info,information,Informatsy"
+        ></meta>
+        <meta property="og:title" content="Informatsy" />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://informatsy.in/resources/questionPapers"
+        />
+        <title>Loading QuestionPapers</title>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9672945121394472"
+          crossorigin="anonymous"
+        ></script>
+      </Helmet>
       <span className={classes.loaderProgress}>
         <CircularProgress size="2rem" />
       </span>

@@ -8,7 +8,7 @@ https://informatsy.in/signup
 https://informatsy.in/contact
 https://informatsy.in/features
 https://informatsy.in/notifications
-https://informatsy.in/cookiePolicy
-https://informatsy.in/privacyPolicy
+https://informatsy.in/cookiepolicy.html
+https://informatsy.in/privacypolicy.html
 
 

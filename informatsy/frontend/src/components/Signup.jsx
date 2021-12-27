@@ -427,7 +427,7 @@ class FormMain extends Component {
                     console.log("something went wrong");
                   }
                 }}
-                redirectUri="http://localhost:3000/signup"
+                redirectUri="https://informatsy.in/signup"
                 render={(renderProps) => (
                   <img
                     src={fb_icon}
@@ -474,7 +474,7 @@ class FormMain extends Component {
                   console.log(res.code);
                   this.OathAccessToken("linkedIn", res.code);
                 }}
-                redirectUri="http://localhost:3000/linkedin"
+                redirectUri="https://informatsy.in/linkedin"
                 scope="r_liteprofile r_emailaddress"
                 renderElement={({ onClick, disabled }) => (
                   <img

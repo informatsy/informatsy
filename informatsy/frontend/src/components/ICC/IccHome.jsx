@@ -7,16 +7,18 @@ import NoResource from "../resourcesComponents/NoResource";
 import { CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+import { Helmet } from "react-helmet";
+import Iccskeleton from "../layoutsComponent/skeletonLoads/Iccskeleton";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 const useStyles = makeStyles((theme) => ({
   loader: {
-    height: "50vh",
-  },
-  loaderProgress: {
-    position: "absolute",
-    left: "50%",
-    top: "30%",
-    transform: "translate(-50%,-50%)",
+    height: "100%",
+    marginBottom: "1rem",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignContent: "center",
   },
 }));
 
@@ -25,6 +27,7 @@ export default function IccHome() {
   const [data1, setData1] = useState([]);
   const [data2, setData2] = useState([]);
   const [loading, setLoading] = useState(false);
+  const data = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   const fetchData = () => {
     setLoading(true);
@@ -39,7 +42,7 @@ export default function IccHome() {
         setData1(alldata[0].data);
         // all data
         // setData2(alldata[1].data);
-        
+
         // filtered website data
         setData2(
           alldata[1].data.filter(
@@ -60,6 +63,29 @@ export default function IccHome() {
 
   return !loading ? (
     <div>
+      <Helmet>
+        <meta name="title" content="Informatsy coding club" />
+        <meta
+          name="description"
+          content="Informatsy coding club includes all contests and their events registration here only."
+        />
+        <meta
+          name="keywords"
+          content="informatsy,vtu notes,vtu students,info,informat,informatsy-info,information,Informatsy"
+        ></meta>
+        <meta property="og:title" content="Informatsy" />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://informatsy.in/resources/questionPapers"
+        />
+        <title>ICC</title>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9672945121394472"
+          crossorigin="anonymous"
+        ></script>
+      </Helmet>
       <Typography
         variant="h4"
         style={{ textAlign: "center", marginBottom: "30px" }}
@@ -113,9 +139,22 @@ export default function IccHome() {
     </div>
   ) : (
     <div className={classes.loader}>
-      <span className={classes.loaderProgress}>
-        <CircularProgress size="2rem" />
-      </span>
+      <Typography
+        variant="h4"
+        style={{ textAlign: "center", marginBottom: "30px" }}
+        color="textPrimary"
+      >
+        Contests
+      </Typography>
+      <Grid container spacing={5}>
+        {data.map((d) => {
+          return (
+            <Grid item xs={12} sm={6} md={4}>
+              <Iccskeleton />
+            </Grid>
+          );
+        })}
+      </Grid>
     </div>
   );
 }

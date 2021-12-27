@@ -16,12 +16,12 @@ import { Box, Container } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
+import { Helmet } from "react-helmet";
 
 const useStyles = makeStyles((theme) => ({
   bg: {
     // backgroundColor: "red",
     backgroundColor: "#f0f8ff",
-
   },
   layout: {
     paddingTop: "90px",
@@ -51,33 +51,51 @@ function Notifications() {
   let count = 0;
   const [expanded, setExpanded] = useState(-1);
   const handleExpandClick = (index) => {
-    if(expanded===index){
+    if (expanded === index) {
       setExpanded("");
-    }else{
-      setExpanded(index)
+    } else {
+      setExpanded(index);
     }
   };
-  
+
   let [data, setData] = useState([]);
 
   useEffect(() => {
     axios
-    .get("https://informatsy.pythonanywhere.com/api/notifications/")
-    .then((res) => {
-      const data = res.data;
-      setData(data);
-    })
-    .catch((err) => console.log(err));
+      .get("https://informatsy.pythonanywhere.com/api/notifications/")
+      .then((res) => {
+        const data = res.data;
+        setData(data);
+      })
+      .catch((err) => console.log(err));
   }, []);
-  
+
   return (
-    <div className={classes.bg} style={{ minHeight:"100vh", paddingBottom:"50px" }}>
+    <div
+      className={classes.bg}
+      style={{ minHeight: "100vh", paddingBottom: "50px" }}
+    >
       <SecondAppBar title={"Notifications"} backToPage={"/"} />
 
       <Box className={classes.layout}>
+        <Helmet>
+          <meta name="title" content="Notification" />
+          <meta name="description" content="Notifications " />
+          <meta
+            name="keywords"
+            content="informatsy,vtu notes,vtu students,info,informat,informatsy-info,information,Informatsy"
+          ></meta>
+          <meta property="og:title" content="Notifications" />
+          <meta property="og:type" content="website" />
+          <meta
+            property="og:url"
+            content="https://informatsy.in/notifications"
+          />
+          <title>Notification</title>
+        </Helmet>
         <Container>
           <Grid container spacing={2}>
-            {data.map((item,index) => (
+            {data.map((item, index) => (
               <Grid item xs={12} sm={6} md={4} key={item.id}>
                 <Card className={classes.root} elevation={3}>
                   <CardHeader
@@ -88,12 +106,12 @@ function Notifications() {
                     }
                     action={
                       <IconButton
-                      name = {count}
+                        name={count}
                         className={clsx(classes.expand, {
-                          [classes.expandOpen]: (index===expanded),
+                          [classes.expandOpen]: index === expanded,
                         })}
-                        onClick={()=>handleExpandClick(index)}
-                        aria-expanded={index===expanded}
+                        onClick={() => handleExpandClick(index)}
+                        aria-expanded={index === expanded}
                         aria-label="show more"
                       >
                         <ExpandMoreIcon />
@@ -102,14 +120,18 @@ function Notifications() {
                     title={item.notificationTitle}
                     subheader={item.relatedTo}
                   />
-                  <div key = {count}>
-                  <Collapse in = {index===expanded?true:false} timeout="auto" unmountOnExit = {true}>
-                    <CardContent>
-                      <Typography variant="body2">
-                      {item.notificationDescription}
-                      </Typography>
-                    </CardContent>
-                  </Collapse>
+                  <div key={count}>
+                    <Collapse
+                      in={index === expanded ? true : false}
+                      timeout="auto"
+                      unmountOnExit={true}
+                    >
+                      <CardContent>
+                        <Typography variant="body2">
+                          {item.notificationDescription}
+                        </Typography>
+                      </CardContent>
+                    </Collapse>
                   </div>
                 </Card>
               </Grid>

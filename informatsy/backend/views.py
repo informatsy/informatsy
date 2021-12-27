@@ -169,7 +169,7 @@ class AllOauthView(APIView):
             else:
                 oauthserilizersBasic = alloauthBasicProfile(data=data)
                 if oauthserilizersBasic.is_valid():
-                    print("saved")
+                    # print("saved")
                     user = oauthserilizersBasic.save()
                     return {"status": True, "id": user}
 
@@ -325,10 +325,9 @@ class Loginoauth(APIView):
                 if isUserexist.exists():
                     token = essentialClass.UniqueidGen.TokenGeneratorOauth(
                         isUserexist[0])
-                    print(token)
+                    # print(token)
                     return Response({"token": token}, status=status.HTTP_200_OK)
                 else:
-
                     return Response("Account not registered with given credentials...!",
                                     status=status.HTTP_409_CONFLICT)
 

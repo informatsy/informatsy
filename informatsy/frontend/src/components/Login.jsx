@@ -25,6 +25,7 @@ import { LinkedIn } from "react-linkedin-login-oauth2";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useHistory } from "react-router";
+import { Helmet } from "react-helmet";
 class FormMain extends Component {
   constructor(props) {
     super(props);
@@ -260,7 +261,7 @@ class FormMain extends Component {
                       console.log("something went wrong");
                     }
                   }}
-                  redirectUri="http://localhost:3000/signup"
+                  redirectUri="https://informatsy.in/signup"
                   render={(renderProps) => (
                     <img
                       src={fb_icon}
@@ -304,7 +305,7 @@ class FormMain extends Component {
                     console.log(res.code);
                     this.OathAccessToken("linkedIn", res.code);
                   }}
-                  redirectUri="http://localhost:3000/linkedin"
+                  redirectUri="https://informatsy.in/linkedin"
                   scope="r_liteprofile r_emailaddress"
                   renderElement={({ onClick, disabled }) => (
                     <img
@@ -360,6 +361,26 @@ export class Login extends Component {
     return (
       <>
         <div className="login_main">
+          <Helmet>
+            <meta name="title" content="login" />
+            <meta
+              name="description"
+              content="login for informatsy user to access all features"
+            />
+            <meta
+              name="keywords"
+              content="informatsy,vtu notes,vtu students,info,informat,informatsy-info,information,Informatsy"
+            ></meta>
+            <meta property="og:title" content="Informatsy" />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content="https://informatsy.in/login" />
+            <title>Login</title>
+            <script
+              async
+              src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9672945121394472"
+              crossorigin="anonymous"
+            ></script>
+          </Helmet>
           <div className="login_parent">
             <div className="login_side_bar">
               <div className="login_side_p1"></div>
