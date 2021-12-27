@@ -12,6 +12,9 @@ export const UserProvider = ({ children }) => {
     name: "",
     isLoaded: false,
   });
+  const [notes, setNotes] = useState([]);
+  const [qnspaper, setQnspaper] = useState([]);
+  const [syllabus, setSyllabus] = useState([]);
   const expires = 1 / 48;
   const history = useHistory();
   useEffect(() => {
@@ -80,7 +83,18 @@ export const UserProvider = ({ children }) => {
       });
   }, []);
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider
+      value={{
+        user,
+        setUser,
+        qnspaper,
+        setQnspaper,
+        notes,
+        setNotes,
+        syllabus,
+        setSyllabus,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

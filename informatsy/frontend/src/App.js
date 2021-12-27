@@ -39,6 +39,7 @@ import ResetPassword from "./components/ResetPassword";
 import * as firebase from "firebase/app";
 import "firebase/messaging";
 import Attendance from "./components/exploreComponent/Attendance";
+import { authAxios } from "./Authaxios";
 // Custom theme of Informatsy
 const theme = createMuiTheme({
   palette: {
@@ -81,12 +82,25 @@ function App() {
     measurementId: "G-G6CXLGP1CN",
   };
 
-  // Initialize Firebase
+  // -----------------------Calling the Resource section data here only--------------------
+  const resourceCollector = async () => {
+    // try {
+    //   const notes = await authAxios.get("notes/");
+    //   const questionPaper = await authAxios.get("questionPapers/");
+    //   console.log(notes.data);
+    //   console.log(questionPaper.data);
+    // } catch {
+    //   console.log("Something went wrong");
+    // }
+    // console.log("hello");
+  };
+  // --------------------------------Initialize Firebase--------------------------
   const TRACKING_ID = "G-3CEZ1R6HBT";
   useEffect(() => {
     ReactGA.initialize(TRACKING_ID);
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
+    resourceCollector();
   }, []);
   ReactGA.pageview(window.location.pathname + window.location.search);
   //init for google analytics

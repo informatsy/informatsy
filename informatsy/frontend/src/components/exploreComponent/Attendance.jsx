@@ -28,16 +28,16 @@ export default function Attendance() {
     setEmailError(false);
     setMessageError(false);
 
-    if (fullName == "") {
+    if (fullName === "") {
       setFullNameError(true);
     }
-    if (USN == "") {
-        setUSNError(true);
-      }
-    if (email == "") {
+    if (USN === "") {
+      setUSNError(true);
+    }
+    if (email === "") {
       setEmailError(true);
     }
-    if (message == "") {
+    if (message === "") {
       setMessageError(true);
     }
 
