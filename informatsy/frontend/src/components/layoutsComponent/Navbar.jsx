@@ -17,13 +17,6 @@ import { UserContext } from "../../UserContexapi";
 import { CircularProgress } from "@material-ui/core";
 import ExploreIcon from '@material-ui/icons/Explore';
 import {
-  authAxios,
-  // refresh_token,
-  // access_token,
-  axiosinfo,
-} from "../../Authaxios";
-
-import {
   Avatar,
   Container,
   Hidden,
@@ -108,7 +101,6 @@ export default function Navbar({ children }) {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
-  const [loading, setloading] = useState(true);
   const [onetapstatus, setstatus] = useState(false);
   const user = React.useContext(UserContext);
   // const user = {
@@ -154,69 +146,13 @@ export default function Navbar({ children }) {
           status: true,
           profile_img: res.data.data.profile_img,
           name: res.data.data.name,
+          isLoaded: true,
         });
       })
       .catch((err) => {
         //console.log(err.response.data);
       });
   };
-  useEffect(() => {
-    // console.log(user.user.status);
-    //-----------progress event in axios--------------
-    // onUploadProgress: progressEvent => console.log(progressEvent.loaded)
-    authAxios
-      .get(`getuserinfo/`)
-      .then((res) => {
-        // console.log(res.data);
-        setstatus(true);
-        user.setUser({
-          status: true,
-          profile_img: res.data.profile_img === null ? res.data.name[0]: res.data.profile_img ,
-          name: res.data.name,
-        });
-        setloading(false);
-
-        // //console.log(user);
-      })
-      .catch((err) => {
-        //console.log(err.response);
-        if (err.response) {
-          axiosinfo
-            .post(`token/refresh/`, {
-              refresh: Cookies.get("refresh_token"),
-            })
-            .then((res) => {
-              setstatus(true);
-              Cookies.set("access_token", res.data.access, {
-                expires: expires,
-              });
-              authAxios
-                .get("/getuserinfo/")
-                .then((res) => {
-                  user.setUser({
-                    status: true,
-                    profile_img: res.data.profile_img,
-                    name: res.data.name,
-                  });
-                  setloading(false);
-                })
-                .catch((err) => {
-                  //console.log("Can't get user info");
-                  setstatus(false);
-                  setloading(false);
-                  user.setUser({ status: false, profile_img: "", name: "" });
-                });
-            })
-            .catch((err) => {
-              history.push("/");
-              setloading(false);
-              user.setUser({ status: false, profile_img: "", name: "" });
-              // if (err.response.status === 401) {
-              // }
-            });
-        }
-      });
-  }, []);
 
   useGoogleOneTapLogin({
     onError: (error) => console.log(error),
@@ -283,14 +219,14 @@ export default function Navbar({ children }) {
                 </ListItem>
               ))}
               {user.user.status ? (
-                !loading ? (
+                user.user.isLoaded ? (
                   <Account />
                 ) : (
                   <span className={classes.loaderdesk}>
                     <CircularProgress thickness="3.6" size="2rem" />
                   </span>
                 )
-              ) : !loading ? (
+              ) : user.user.isLoaded ? (
                 <>
                   <ListItem>
                     <Button
@@ -337,7 +273,7 @@ export default function Navbar({ children }) {
                 }}
               >
                 {user.user.status ? (
-                  !loading ? (
+                  user.user.isLoaded ? (
                     <Account />
                   ) : (
                     <span className={classes.loaderdesk}>
@@ -348,7 +284,7 @@ export default function Navbar({ children }) {
                       />
                     </span>
                   )
-                ) : !loading ? (
+                ) : user.user.isLoaded ? (
                   <Button
                     color="primary"
                     size="medium"
